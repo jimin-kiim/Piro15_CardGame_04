@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
 from .models import User
-from . import forms
+# from . import forms
 
 def attack(request):
     return render(request, "users/attack.html")
@@ -18,7 +19,7 @@ def gamelist(request):
 
 def log_in(request):
     if request.method == "POST":
-        form = forms.LoginForm(request.POST)
+        form = form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             name = form.changed_data.get('name')
             password = form.cleaned_data.get('password')
@@ -35,7 +36,7 @@ def log_in(request):
         else:
             return render(request, "login.html")
 
-    form = forms.LoginForm()
+    form = AuthenticationForm()
     return render(request, "users/login.html", {'form':form})
 
 def log_out(request):
