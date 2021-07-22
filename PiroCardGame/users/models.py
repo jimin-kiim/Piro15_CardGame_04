@@ -25,8 +25,8 @@ class Game(models.Model):
     opponent = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='opponent')
     # challenger_choice = models.ForeignKey(to='users.Card')
     # opponent_choice = models.ForeignKey(to='users.Card')
-    status = models.IntegerField()
-    # result = models.BooleanField()
+    status = models.IntegerField()#진행중, 게임 끝
+    rule=models.BooleanField()
 
 
 class Card(models.Model):
@@ -40,11 +40,11 @@ class Card(models.Model):
         option.append(rnum)
 
     CHOICES = (
-
-        ("num1", ''),
-        ("num2", ''),
-        ("num3", ''),
-        ("num4", ''),
-        ("num5", ''),
-
+        ("num1", f'{option[0]}'),
+        ("num2", f'{option[1]}'),
+        ("num3", f'{option[2]}'),
+        ("num4", f'{option[3]}'),
+        ("num5", f'{option[4]}'),
     )
+
+    card = models.IntegerField(choices=CHOICES)
