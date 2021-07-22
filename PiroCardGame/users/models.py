@@ -2,6 +2,7 @@ from django.db import models
 import random
 
 
+#     PLAYER_CHOICES = (
 class User(models.Model):
     PLAYER_CHOICES = (
         ("player1", "송경"),
