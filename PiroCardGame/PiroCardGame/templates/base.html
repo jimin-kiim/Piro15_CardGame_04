@@ -1,2 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIROGRAM CARDGAME</title>
+</head>
+<body>
+    <header>
+        <div>
+            <a href="{% url 'users:main' %}"><div>PIROGRAM CARDGAME</div></a>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'users:attack' %}">게임하기</a></li>
+                    <li><a href="{% url 'users:ranking' %}">랭킹보기</a></li>
+                    <li><a href="{% url 'users:logout' %}">로그아웃</a></li>
+                {% else %}
+                    <li><a href="{% url 'users:login' %}">로그인</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </header>
+
+    {% block content %}
+    {% endblock content %}
+
+    {% load socialaccount %}
+    {% providers_media_js %}
+
+    {% block script %}
+    {% endblock script %}
+
+</body>
+</html>
+
 <!-- TODO(1):Navbar 설정 -->
 <!-- TODO(2):Footer 아무거나 글자 넣기 -->
