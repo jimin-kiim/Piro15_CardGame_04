@@ -11,7 +11,7 @@ class User(models.Model):
         ("player5", "지민"),
     )
     name = models.CharField(max_length=20, choices=PLAYER_CHOICES)
-    choice = models.ForeignKey(to='users.Card')
+    choice = models.ForeignKey(to='users.Card', on_delete=models.CASCADE)
     sum = models.IntegerField()
     result = models.BooleanField()
 
@@ -21,8 +21,8 @@ class User(models.Model):
 
 class Game(models.Model):
 
-    challenger = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
-    opponent = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
+    challenger = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='challenger')
+    opponent = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='opponent')
     # challenger_choice = models.ForeignKey(to='users.Card')
     # opponent_choice = models.ForeignKey(to='users.Card')
     status = models.IntegerField()
