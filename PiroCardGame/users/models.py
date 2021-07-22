@@ -11,9 +11,9 @@ class User(models.Model):
         ("player5", "지민"),
     )
     name = models.CharField(max_length=20, choices=PLAYER_CHOICES)
-    choice = models.ForeignKey(to='users.Card', on_delete=models.SET_NULL)
+    choice = models.ForeignKey(
+        to='users.Card', on_delete=models.CASCADE, null=True)
     sum = models.IntegerField(default=0)
-    result = models.BooleanField()#승패여부
 
     def __str__(self):
         return self.name
@@ -22,13 +22,12 @@ class User(models.Model):
 class Game(models.Model):
 
     challenger = models.ForeignKey(
-        to='users.User', on_delete=models.CASCADE, related_name='challenger')
+        to='users.User', on_delete=models.CASCADE, related_name='challenger', null=True)
     opponent = models.ForeignKey(
-        to='users.User', on_delete=models.CASCADE, related_name='opponent')
-    # challenger_choice = models.ForeignKey(to='users.Card')
-    # opponent_choice = models.ForeignKey(to='users.Card')
-    status = models.IntegerField()#진행중, 게임 끝
-    rule=models.BooleanField()
+        to='users.User', on_delete=models.CASCADE, related_name='opponent', null=True)
+    status = models.IntegerField(null=True)  # 진행중, 게임 끝
+    rule = models.BooleanField(null=True)
+    result = models.BooleanField()  # 승패여부
 
 
 class Card(models.Model):
@@ -49,4 +48,4 @@ class Card(models.Model):
         ("num5", f'{option[4]}'),
     )
 
-    card = models.IntegerField(choices=CHOICES)
+    card = models.CharField(choices=CHOICES, max_length=10)

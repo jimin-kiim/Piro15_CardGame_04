@@ -49,7 +49,7 @@ def main(request):
 
 def ranking(request):
     users = User.objects.all()
-    users.sort(key = lambda x: x.score)
+    users.sort(key = lambda x: x.sum)
     ctx = {
         'users':users
     }
