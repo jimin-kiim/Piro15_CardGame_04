@@ -1,4 +1,11 @@
 <!-- TODO(1):1~9사이의 랜덤한 숫자가 선택지에 주어짐 -->
 <!-- TODO(2): 등록된 유저들의 목록 선택지에 주어짐, 한 명만 선택가능 -->
 <!-- TODO(3):공격하기! 버튼 누르면 전적(리스트)로 이동 -->
-{% extends 'base.html' %}
+{% extends 'users/base.html' %}
+
+{%block content%}
+<p>내가 고른 카드: -----여기 카드숫자구현해야함-------</p>
+<p>공격할 상대는? -----여기 상대초이스구현해야함-------</p>
+<div class="btn btn-border"><a href="{% url 'users:gamelist' %}">공격하기!</a></div>
+
+{%endblock%}
