@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 from .models import User
+from django.views import View
+from . import forms
 
 def attack(request):
     pass
@@ -13,6 +15,23 @@ def gameinfo(request):
 
 def gamelist(request):
     pass
+
+class LoginView(View):
+    def get(self, request):
+        form = forms.LoginForm()
+        return render(request, "users/login.html", {"form":form})
+
+    def post(self, request):
+        form = forms.LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(request, username = username, password = password)
+            if user is not None:
+                login(request, user)
+                return render(request, "users/main.html")
+        return render(request, "users/main.html")
+
 
 def login(request):
     return render(request, "users/login.html")
