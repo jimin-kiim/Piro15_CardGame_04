@@ -10,21 +10,21 @@ class User(models.Model):
         ("player4", "정훈"),
         ("player5", "지민"),
     )
-    name = models.CharField(max_length=20, verbose_name="ID", choices=PLAYER_CHOICES)
-    choice = models.ForeignKey(to='users.Card', on_delete=models.CASCADE)
-    sum = models.IntegerField()
-    result = models.BooleanField()
+    name = models.CharField(max_length=20, choices=PLAYER_CHOICES)
+    choice = models.ForeignKey(to='users.Card', on_delete=models.SET_NULL)
+    sum = models.IntegerField(default=0)
+    result = models.BooleanField()#승패여부
 
     def __str__(self):
         return self.name
 
 
 class Game(models.Model):
-    challenger_set = User.challenger_set.all()
-    opponent_set = User.opponent_set.all() 
 
-    challenger = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='challenger')
-    opponent = models.ForeignKey(to='users.User', on_delete=models.CASCADE, related_name='opponent')
+    challenger = models.ForeignKey(
+        to='users.User', on_delete=models.CASCADE, related_name='challenger')
+    opponent = models.ForeignKey(
+        to='users.User', on_delete=models.CASCADE, related_name='opponent')
     # challenger_choice = models.ForeignKey(to='users.Card')
     # opponent_choice = models.ForeignKey(to='users.Card')
     status = models.IntegerField()#진행중, 게임 끝
