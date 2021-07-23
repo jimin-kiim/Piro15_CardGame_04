@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.models import User as U
 from django.urls import reverse
 from .models import User
 from .models import Game
@@ -18,9 +17,7 @@ def attack(request):
         return redirect("users:main")
 
     else:
-        cardset = []
         cards = random.sample(range(1,10),5)
-        
         user_all = User.objects.exclude(id=request.user.id)
         ctx = {
             "user_all": user_all,
