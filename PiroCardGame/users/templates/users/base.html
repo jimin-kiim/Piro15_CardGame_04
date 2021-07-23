@@ -23,10 +23,7 @@
     <title>PIROGRAM CARDGAME</title>
     <style type="text/css"> 
       a { text-decoration:none } 
-
-      body {text-align: center;}
-
-    </style> 
+      </style> 
 </head>
 <body>
     {% load static %} <!--static 폴더에 있는걸 업로드하는거-->
@@ -52,7 +49,7 @@
               </li>
               {% else %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'users:login' %}">로그인</a>
+                <a class="nav-link" href="/accounts/login">로그인</a>
               </li>
               {% endif %}
             
@@ -61,16 +58,10 @@
         </div>
       </nav>
 <!-- ↑: Navbar코드 ↓:코드 들어갈것 -->
-        
-    {% block content %}
-    {% endblock content %}
-    <div class="text-center" >
-        <footer style="position : fixed; bottom:0;
-          padding:10px; width: 100%; background-color: lightblue;">
-        <p> 마지막 팀 과제 </p>
-        <p> 피로피로피로피로피로피로피로피로피로피로피로피로피로피로피로</p>
-        </footer>
-    </div>
+      <div class="ideas">
+          {%block content%}
+          {%endblock%}
+      </div>
       <script src="./js/bootstrap.bundle.js"></script>
       <script src="./js/bootstrap.bundle.js.map"></script>
       <script src="./js/bootstrap.bundle.min.js"></script>

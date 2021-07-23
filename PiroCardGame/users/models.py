@@ -23,11 +23,11 @@ class Game(models.Model):
         to=U, on_delete=models.CASCADE, related_name='challenger', null=True, default=None)
     opponent = models.ForeignKey(
         to=U, on_delete=models.CASCADE, related_name='opponent', null=True)
-    rule = models.BooleanField(null=True, default=True) 
-    status = models.BooleanField(default=True)  # 진행중, 게임 끝   
+    status = models.BooleanField(default=True)  # 진행중, 게임 끝
+    rule = models.BooleanField(null=True, default=True)    
     result = models.BooleanField(default=True)
-    challengerCard = models.CharField(max_length=10, default=1)
-    opponentCard = models.CharField(max_length=10, null=True, default=None)
+    challengerCard = models.IntegerField(default=1)
+    opponentCard = models.IntegerField(default=0)
     
 
 class Card(models.Model):

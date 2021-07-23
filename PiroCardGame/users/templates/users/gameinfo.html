@@ -7,13 +7,30 @@
 {%block content%}
 {{ game.id }}-{{ game.challenger }}VS{{ game.opponent }}
 
-<!-- 게임 종료된 경우 -->
+<!-- 게임 진행중 -->
 {%if status %} 
+<!-- 내가 건 게임일 때 -->
+    {% if challenger.name==name %}
+    <h5>진행중****</h5>
+    <h5>
+        나: {{ game.challenger.choice }} 
+    </h5>
+    <form action="" method="post">
+        <input type="submit" value="cancle" href='{% url "users:gamelist" %}'">게임취소</button>
+    </form>
+
+    <!-- 상대가 건 게임일 때 -->
+    {% else %}
+    <div class="btn"><a hreef="{% url "users:counterattack" %}">대응하기</a></div>
+    <hr>
+
+<!-- 게임 끝난 경우 -->
+ {% else %}
     <hr>
     {{ game.rule }}
     <hr>
-    {%if challenger.name==name|result %}
     <!-- 내가 건 게임일 때 -->
+    {%if challenger.name==name|result %}
         user : {{ game.opponent.choice }}
         나 : {{ game.challenger.choice }}
         <hr>
@@ -21,29 +38,14 @@
         <hr>
         점수 : {{ game.opponent.choice }} 점
     <!-- 상대가 건 게임일 때 -->
-    {% else %}
+    {% else if opponent.name==name|result %}
         user : {{ game.challenger.choice }}
         나 : {{ game.opponenet.choice }}
         <hr>
         결과: 패배    
         <hr>
         점수 : -{{ game.opponent.choice }} 점
-    {% endif %}
-<!-- 게임 진행중인 경우 -->
-{% else %}
-    <!-- 내가 건 게임일 때 -->
-    {% if challenger.name==name %}
-        진행 중…
-        나: {{ game.challenger.choice }} 
-        <form action="" method="post">
-            <input type="submit" value="cancle" href='{% url "users:gamelist" %}'">게임취소</button>
-        </form>
-
-    <!-- 상대가 건 게임일 때 -->
-    {% else %}
-        <div class="btn"><a hreef="{% url "users:counterattack" %}">대응하기</a></div>
-        <hr>
-    {% endif %}
+    {% endif %}   
 {% endif %}
 <hr>
 <div class="btn"><a hreef="{% url "users:gamelist" %}">전적목록</a></div>
