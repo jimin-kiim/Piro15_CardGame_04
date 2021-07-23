@@ -2,3 +2,48 @@
 <!-- TODO(2): 게임 승자 기준, 유저 숫자선택, 게임결과, 점수 -->
 <!-- TODO(3):전적목록 버튼 누르면 현재 유저의 전적페이지 이동 -->
 <!-- TODO(4):반격하고 전적목록을 눌렀을 경우 반격버튼 사라짐 -->
+{% extends 'users/base.html' %}
+
+{%block content%}
+{{ game.id }}-{{ game.challenger }}VS{{ game.opponent }}
+
+<!-- 게임 종료된 경우 -->
+{%if status %} 
+    <hr>
+    {{ game.rule }}
+    <hr>
+    {%if challenger.name==name|result %}
+    <!-- 내가 건 게임일 때 -->
+        user : {{ game.opponent.choice }}
+        나 : {{ game.challenger.choice }}
+        <hr>
+        결과: 승리
+        <hr>
+        점수 : {{ game.opponent.choice }} 점
+    <!-- 상대가 건 게임일 때 -->
+    {% else %}
+        user : {{ game.challenger.choice }}
+        나 : {{ game.opponenet.choice }}
+        <hr>
+        결과: 패배    
+        <hr>
+        점수 : -{{ game.opponent.choice }} 점
+    {% endif %}
+<!-- 게임 진행중인 경우 -->
+{% else %}
+    <!-- 내가 건 게임일 때 -->
+    {% if challenger.name==name %}
+        진행 중…
+        나: {{ game.challenger.choice }} 
+        <form action="" method="post">
+            <button name="cancle" value="delete" class="btn" onclick="location.href='{% url "users:gamelist" %}'">게임취소</button>
+        </form>
+
+    <!-- 상대가 건 게임일 때 -->
+    {% else %}
+        <button class="btn" onclick="location.href='{% url "users:counterattack" %}'">대응하기</button>
+        <hr>
+    {% endif %}
+{% endif %}
+<hr>
+<button class="btn" onclick="location.href='{% url "users:gamelist" %}'">전적 목록</button>
