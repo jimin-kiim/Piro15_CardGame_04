@@ -5,27 +5,42 @@
 {% extends 'users/base.html' %}
 
 {%block content%}
-{{ game.pk }}-{{ game.challenger }} VS {{ game.opponent }}
-
 <!-- 게임 진행중 -->
 {%if game.status %} 
     {% if game.challenger_id == user.id %}     
-        {{ game.pk }}-{{ game.challenger }} VS {{ game.opponent }}<br>
-        진행 중…<br>
-        나: {{game.challengerCard}}
-        <a href="{% url 'users:delete' game.pk %}">게임취소</a><hr>   
-        <a href="{% url 'users:gamelist' %}">전적목록</a>        
+        <h4 class="text-light">
+            {{ game.pk }}-{{ game.challenger }} VS {{ game.opponent }}<br>
+        </h4>  
+        <h5>
+            진행 중…<br>
+            나: {{game.challengerCard}}<br>
+        </h5>  
+        <button type="button" class="btn btn-primary" style="width:100px; padding:3px;">
+            <a href="{% url 'users:delete' game.pk %}" class="text-light">게임취소</a>
+        </button>
+        <hr>
+        <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
+            <a href="{% url 'users:gamelist'%}" class="text-light">전적목록</a>
+        </button>      
     {% else %}
     {% endif %}
-    
+
     {% if game.opponent_id == user.id %} 
-        {{ game.pk }}-{{ game.challenger }} VS {{ game.opponent }}<br>
-        <a href="">대응하기</a><hr> 
-        <a href="{% url 'users:gamelist' %}">전적목록</a>    
+        <h4 class="text-light">
+            {{ game.pk }}-{{ game.challenger }} VS {{ game.opponent }}<br>
+        </h4>
+        <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
+            <a href="" class="text-light">반격하기</a>
+        </button>
+        <hr>
+        <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
+            <a href="{% url 'users:gamelist'%}" class="text-light">전적목록</a>
+        </button>
     {% else %}
     {% endif %}
 <!-- 게임 종료 -->
 {% else %}
+    <h5 text-light></h5>
     <hr>
     {% if game.rule %}
         <p>숫자가 더 큰 사람이 대결에서 이깁니다</p>
@@ -43,6 +58,9 @@
     {% else %}
         <p>점수: -{{game.challengerCard}}점</p>
     {% endif %}
-    
+    </h5>  
+    <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
+        <a href="{% url 'users:gamelist'%}" class="text-light">전적목록</a>
+    </button>  
 {% endif %}
 {%endblock%}

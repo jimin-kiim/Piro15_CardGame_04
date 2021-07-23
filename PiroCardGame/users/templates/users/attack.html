@@ -4,35 +4,35 @@
 {% extends 'users/base.html' %}
 
 {%block content%}
-<p>내가 고른 카드: -----여기 카드숫자구현해야함-------</p>
-<p>공격할 상대는? -----여기 상대초이스구현해야함-------</p>
-
-
 
     <form method="POST" enctype="multipart/form-data">
-        <label for="cardset">내가 고른 카드</label>
-        <select class="" name="cardset" id="">
-            {% for card in cardset %}
-                <option value="{{ card }}">{{ card }}</option>
-            {% endfor %}
-        </select>
+        <h4 class="text-light">
+            <label for="cardset">내가 고른 카드: </label>
+            <select class="" name="cardset" id="">
+                {% for card in cardset %}
+                    <option value="{{ card }}">{{ card }}</option>
+                {% endfor %}
+            </select>
+        </h4>
 
-        <div class="">
-            <label for="opponent">공격할 상대는?</label>
+        
+        <h4 class="text-light">
+                <label for="opponent">공격할 상대는?</label>
             <select name="opponent" id="">
                 {% for opponent in user_all %}
                     <option value="{{ opponent }}">{{ opponent }}</option>
                 {% endfor %}
             </select>
-        </div>
-        <div class="btn btn-border"><a href="{% url 'users:gamelist' %}">공격하기!</a></div>
+        </h4>
+        
+        <button type="button" class="btn btn-primary" style="width:200px;">
+            <a href="{% url 'users:gamelist' %}" class="text-light">공격하기!</a>
+        </button>
 
         <!-- Security token -->
         {% csrf_token %}
 
         <!-- Using the formset -->
         {{ form.as_p }}
-
-        <input type="submit" value="Submit">
     </form>
 {%endblock%}

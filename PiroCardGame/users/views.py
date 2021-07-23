@@ -7,9 +7,6 @@ from .models import User
 from .models import Game
 import random
 
-from django.contrib.auth.models import User as U
-# from . import forms
-
 def attack(request):
     if request.method == "POST":
         challenger = request.user

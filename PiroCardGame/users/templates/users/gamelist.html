@@ -6,40 +6,56 @@
 {% extends 'users/base.html' %}
 
 {%block content%}
-<p>현재 플레이어의 게임 전적을 보여주는 페이지입니다. 글을 조금 더 써봅시다. 조금만 더요</p>
-<p>현재 플레이어의 게임 전적을 보여주는 페이지입니다. 글을 조금 더 써봅시다. 조금만 더요</p>
-<br><br>
-<p>현재플레이어: {{user.username}} </p>
+<h4 class="text-light"> 현재플레이어: {{user.username}} </h4>
 <hr>
 
 {% for game in games %}   
-    <div>
+    <div class="text-dark" style="margin:5px;">
     {%if game.status %} <!--게임 진행중 (status==1) -->
 
-        {% if game.challenger_id == user.id %}     
+        {% if game.challenger_id == user.id %}  
+            
+            <span class="text-light">   
             {{ game.pk }}-{{ game.challenger }} VS {{ game.opponent }}
+            </span>
             진행 중…
-            <a href="{% url 'users:delete' game.pk %}">게임취소</a>    
-            <a href="{% url 'users:gameinfo' game.pk%}">게임정보</a>        
+            <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
+                <a href="{% url 'users:delete' game.pk %}" class="text-light">게임취소</a>
+            </button>
+            <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
+                <a href="{% url 'users:gameinfo' game.pk%}" class="text-light">게임정보</a>
+            </button>
         {% else %}
         {% endif %}
 
         {% if game.opponent_id == user.id %} 
+            <span class="text-light">   
             {{ game.pk }}-{{ game.challenger }} VS {{ game.opponent }}
-            <a href="">반격하기</a>     
-            <a href="{% url 'users:gameinfo' game.pk%}">게임정보</a>    
+            </span>
+            <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
+                <a href="" class="text-light">반격하기</a>
+            </button>
+            <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
+                <a href="{% url 'users:gameinfo' game.pk%}" class="text-light">게임정보</a>
+            </button>
         {% else %}
         {% endif %}
 
     {% else %} <!--게임 끝 (status==0) -->
+        <span class="text-light">   
+        {{ game.pk }}-{{ game.challenger }} VS {{ game.opponent }}
+        </span>
         {%if game.result %} <!--게임 승 (result==1) -->
             결과: 승리
-            <a href="{% url 'users:gameinfo' %}">게임정보</a>
+            <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
+                <a href="{% url 'users:gameinfo' game.pk%}" class="text-light">게임정보</a>
+            </button>
         {% else %} <!--게임 패-->
             결과: 패배
-            <a href="{% url 'users:gameinfo' game.pk %}">게임정보</a>
-        {% endif %}
-            
+            <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
+                <a href="{% url 'users:gameinfo' game.pk%}" class="text-light">게임정보</a>
+            </button>
+        {% endif %}            
         
     {% endif %}
     </div>    
