@@ -20,14 +20,14 @@
             {{ game.pk }}-{{ game.challenger }} VS {{ game.opponent }}
             진행 중…
             <a href="{% url 'users:delete' game.pk %}">게임취소</a>    
-            <a href="{% url 'users:gameinfo' %}">게임정보</a>        
+            <a href="{% url 'users:gameinfo' game.pk%}">게임정보</a>        
         {% else %}
         {% endif %}
 
         {% if game.opponent_id == user.id %} 
             {{ game.pk }}-{{ game.challenger }} VS {{ game.opponent }}
             <a href="">반격하기</a>     
-            <a href="{% url 'users:gameinfo' %}">게임정보</a>    
+            <a href="{% url 'users:gameinfo' game.pk%}">게임정보</a>    
         {% else %}
         {% endif %}
 
@@ -37,7 +37,7 @@
             <a href="{% url 'users:gameinfo' %}">게임정보</a>
         {% else %} <!--게임 패-->
             결과: 패배
-            <a href="{% url 'users:gameinfo' %}">게임정보</a>
+            <a href="{% url 'users:gameinfo' game.pk %}">게임정보</a>
         {% endif %}
             
         

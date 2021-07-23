@@ -36,16 +36,9 @@ def counterattack(request):
     return render(request, "users/counterattack.html")
 
 def gameinfo(request, pk):
-    user = User.objects.get(pk=pk)
-    game = Game.objects.get(pk=pk)
-    if request.method == "GET":
-        ctx = {
-            'user':user,
-            'game':game,
-        }
-    else: #request method가 POST일 때: 게임 취소 클릭.
-        # game.delete()
-        return redirect(request, "users/gamelist.html")
+    game = get_object_or_404(Game, pk=pk)
+    ctx = {"game": game}
+    return render(request, "users/gameinfo.html", ctx)
 
 def gamelist(request):
     user = request.user #로그인 된 사람    

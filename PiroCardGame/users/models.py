@@ -24,7 +24,7 @@ class Game(models.Model):
     opponent = models.ForeignKey(
         to=U, on_delete=models.CASCADE, related_name='opponent', null=True)
     status = models.BooleanField(default=True)  # 진행중, 게임 끝
-    rule = models.BooleanField(null=True, default=True)    
+    rule = models.BooleanField(null=True, default=True)  # true: 큰사람이김
     result = models.BooleanField(default=True)
     challengerCard = models.IntegerField(default=1)
     opponentCard = models.IntegerField(default=0)
