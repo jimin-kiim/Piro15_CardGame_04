@@ -30,17 +30,17 @@
 </head>
 <body class="bg-secondary text-dark ">
     {% load static %} <!--static 폴더에 있는걸 업로드하는거-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark sticky-top">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'users:main' %}"> <!--navbar누르면 list로 감-->     
-            <span class="text-primary">PIROGRAM CARDGAME</span>
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
+          <a class="navbar-brand" href="{% url 'users:main' %}"> <!--navbar누르면 list로 감-->     
+            <span class="text-primary mx-4">PIROGRAM CARDGAME</span>
+          </a>
           
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav">
                 {% if user.is_authenticated %}
               <li class="nav-item">
                 <a class="nav-link text-light" href="{% url 'users:attack' %}">게임하기</a>
@@ -63,8 +63,8 @@
       </nav>
 <!-- ↑: Navbar코드 ↓:코드 들어갈것 -->
         
-    <div class="align-middle" >
-      <div class="row" style="float: none;">
+    <div class="container d-flex flex-column justify-content-center" style="height:100vh;">
+      <div class="row align-self-center" style="float: none;">
         <div class="col align-self-center" style="float: none; margin:0 auto;">
         {% block content %}
         {% endblock content %}
@@ -72,7 +72,7 @@
     </div>
     </div>
     <div class="text-center  text-secondary" >
-        <footer class="bg-dark" style="position : fixed; bottom:0; padding:30px; width: 100%; ">
+        <footer class="bg-dark" style="position : fixed; bottom:0; padding:10px; width: 100%; ">
         <p> 마지막 팀 과제 </p>
         <p> 피로피로피로피로피로피로피로피로피로피로피로피로피로피로피로</p>
         </footer>
