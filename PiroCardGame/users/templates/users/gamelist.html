@@ -11,6 +11,28 @@
 <br><br>
 <p>현재플레이어: {{user.username}} </p>
 <hr>
-------------여기리스트 구현해야함--------------
+<!-- ------------여기리스트 구현해야함-------------- -->
+{{ game.id }}-{{ game.challenger }}VS{{ game.opponent }}
 
-{%endblock%}
+{%if status %}
+    {%if challenger.name==name|result %}
+        결과: 승리
+    {% else %}
+        결과: 패배
+    {% endif %}
+{% else %}
+    {% if challenger.name==name %}
+        진행 중…
+        <br>
+    나: {{ choice }}
+        <br>
+        <form action="" method="post">
+            <button name="cancle" value="delete" class="btn" onclick="location.href='{% url "users:gamelist" %}'">게임취소</button>
+        </form>
+
+    {% else %}
+        <button class="btn" onclick="location.href='{% url "users:counterattack" %}'">대응하기</button>
+    {% endif %}
+{% endif %}
+<hr>
+<button class="btn" onclick="location.href='{% url "users:gamelist" %}'">전적 목록</button>

@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
 from .models import User
+from .models import Game
 # from . import forms
 
 def attack(request):
@@ -12,10 +13,31 @@ def counterattack(request):
     return render(request, "users/counterattack.html")
 
 def gameinfo(request):
-    return render(request, "users/gameinfo.html")
+    user = User.objects.get(pk=pk)
+    game = Game.objects.get(pk=pk)
+    if request.method == "GET":
+        ctx = {
+            'user':user,
+            'game':game,
+        }
+    else: #request method가 POST일 때: 게임 취소 클릭.
+        game.delete()
+        return redirect(request, "users/gamelist.html")
 
-def gamelist(request):
-    return render(request, "users/gamelist.html")
+def gamelist(request, User, Game, pk):
+    user = User.objects.(pk=pk)
+    game = Game.objects.order_by('-pk')
+    if request.method == "GET":
+        ctx = {
+            'user':user,
+            'game':game,
+            'challenger':game.challenger,
+        }
+        return render(request, "users/gamelist.html", ctx)
+    else: #method==post일때 : 게임취소클릭
+        game.delete()
+        return redirect("user:gamelist")
+
 
 def log_in(request):
     if request.method == "POST":
