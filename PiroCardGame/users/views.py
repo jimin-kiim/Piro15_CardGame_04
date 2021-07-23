@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User as U
 from django.urls import reverse
-from .models import User, Game
+from .models import Game
 from .forms import GameForm
 import random
 # from . import forms
@@ -30,23 +30,30 @@ def randomCard():
 
 
 def attack(request):
-    cardset = randomCard()
+
+    num_list = [random.randint(1, 10) for i in range(5)]
+    card_set = ((f"{num}", f"{num}") for num in num_list)
+
     user = request.user
     print(request.POST)
     print(request.user.id)
     if request.method == 'POST':
-        form = GameForm(data=request.POST, cardset=cardset ,user=user)
+        form = GameForm(data=request.POST, user=request.user, cardset=card_set)
         if form.is_valid():
             form.cleaned_data['challenger'] = request.user
             game = Game.objects.create(**form.cleaned_data)
+            game.set_card_list(num_list)
             game.save()
             return render(request, 'users/gamelist.html', {'form':form})
 
     else:
-        form = GameForm(user, cardset=cardset)
+        form = GameForm(user, cardset=card_set)
     return render(request, "users/attack.html", {'form':form})
 
 def counterattack(request):
+
+
+
     return render(request, "users/counterattack.html")
 
 def gameinfo(request, pk):
