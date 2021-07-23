@@ -6,6 +6,7 @@
 {% extends 'users/base.html' %}
 
 {%block content%}
+
 <p>현재 플레이어의 게임 전적을 보여주는 페이지입니다. 글을 조금 더 써봅시다. 조금만 더요</p>
 <p>현재 플레이어의 게임 전적을 보여주는 페이지입니다. 글을 조금 더 써봅시다. 조금만 더요</p>
 <br><br>
@@ -14,7 +15,7 @@
 
 {% for game in games %}
     <!-- 도전자 vs 상대방-->
-    {{ game.pk }}-{{ game.challenger }}VS{{ game.opponent }}
+    {{ game.id }}-{{ game.challenger }}VS{{ game.opponent }}
 
     
     <!--게임상태-->
@@ -27,20 +28,18 @@
         {% endif %}
 
     {% else %} <!--게임 진행중 (status==0) -->
-        {% if challenger.name==name %} <!-- 로그인한 넘이 공격한거-->
+        {% if challenger.username == user.username %} <!-- 로그인한 넘이 공격한거-->
             진행 중…
-            <br>
-            <form action="" method="post">
-                <a href="{% url 'users:gamelist' %}">게임취소</a>
-            </form>
+            <a href="{% url 'users:delete' game.id %}">게임취소</a>            
         {% else %}  <!-- 상대가 공격한거-->  
             <a href="{% url 'users:counterattack' %}">반격하기</a>
         {% endif %}
     {% endif %}
 
-    
     <!--게임정보버튼-->
-    <a href="{% url 'users:gamelist' %}">전적 목록</a>
-    
+    <a href="{% url 'users:gamelist' %}">전적 목록</a>   
 
 {% endfor %}
+
+{%endblock%}
+

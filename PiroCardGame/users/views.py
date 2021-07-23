@@ -2,16 +2,36 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
-from .models import User
-from .models import Game
-
+from .models import User, Game
+from .forms import GameForm
 from django.db.models import Q
+import random
 
 from django.contrib.auth.models import User as U
 # from . import forms
 
 def attack(request):
-    return render(request, "users/attack.html")
+    if request.method == "POST":
+        challenger = request.user
+        opponent = request.POST.get("opponent")
+        challengerCard = request.POST.get("cardset")
+        realOpponent = User.objects.get(opponent)
+        game = Game(challenger=challenger, opponent=realOpponent, challengerCard=challengerCard)
+        game.save()
+        return redirect("users:gameinfo", pk=game.pk)
+
+    else:
+        cardset = []
+        for _ in range(5):
+            cardSelect = random.randint(1, 10)
+            cardset.append(cardSelect)
+        user_all = list(U.objects.all())
+        user_all.remove(request.user)
+        ctx = {
+            "user_all": user_all,
+            "cardset": cardset,
+        }
+        return render(request, "users/attack.html", ctx)
 
 def counterattack(request):
     return render(request, "users/counterattack.html")
@@ -27,14 +47,14 @@ def gameinfo(request,pk):
     else: #request method가 POST일 때: 게임 취소 클릭.
         game.delete()
         return redirect(request, "users/gamelist.html")
-
+    
 def gamelist(request):
     user = request.user #로그인 된 사람    
-    games = Game.objects.filter(Q(challenger=user.username) or Q(opponent=user.username)) #game 모델
+    games = Game.objects.filter(Q(challenger_id=user.id) or Q(opponent_id=user.id)) #game 모델
     ctx={'games':games}
-    
-    return render(request, "users/main.html",ctx)
-    
+ 
+    return render(request, "users/gamelist.html",ctx)
+  
  
 def log_in(request):
     if request.method == "POST":
@@ -76,3 +96,8 @@ def ranking(request):
         'users':users
     }
     return render(request, "users/ranking.html", ctx)
+
+def delete(request,pk):
+    game=Game.objects.get(id=pk)
+    game.delete()
+    return redirect('users:gamelist') 
