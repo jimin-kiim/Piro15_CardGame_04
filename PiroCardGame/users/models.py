@@ -20,20 +20,7 @@ class User(models.Model):
 
 class Game(models.Model):
     option = []
-    rnum = random.randint(0, 10)
 
-    for i in range(5):
-        while rnum in option:
-            rnum = random.randint(0, 10)
-        option.append(rnum)
-
-    CHOICES = (
-        (f'{option[0]}', f'{option[0]}'),
-        (f'{option[1]}', f'{option[1]}'),
-        (f'{option[2]}', f'{option[2]}'),
-        (f'{option[3]}', f'{option[3]}'),
-        (f'{option[4]}', f'{option[4]}'),
-    )
     challenger = models.ForeignKey(
         to=U, on_delete=models.CASCADE, related_name='challenger', null=True, default=None)
     opponent = models.ForeignKey(
@@ -41,8 +28,8 @@ class Game(models.Model):
     status = models.BooleanField(default=True)  # 진행중, 게임 끝
     rule = models.BooleanField(null=True, default=True)    
     result = models.BooleanField(default=True)
-    challengerCard = models.CharField(choices=CHOICES, max_length=10, default=1)
-    opponentCard = models.CharField(choices=CHOICES, max_length=10, null=True, default=None)
+    challengerCard = models.IntegerField(default=1)
+    opponentCard = models.IntegerField(default=0)
     
 
 class Card(models.Model):
