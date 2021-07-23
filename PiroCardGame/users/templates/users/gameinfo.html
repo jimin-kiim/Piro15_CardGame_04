@@ -36,14 +36,14 @@
         진행 중…
         나: {{ game.challenger.choice }} 
         <form action="" method="post">
-            <button name="cancle" value="delete" class="btn" onclick="location.href='{% url "users:gamelist" %}'">게임취소</button>
+            <input type="submit" value="cancle" href='{% url "users:gamelist" %}'">게임취소</button>
         </form>
 
     <!-- 상대가 건 게임일 때 -->
     {% else %}
-        <button class="btn" onclick="location.href='{% url "users:counterattack" %}'">대응하기</button>
+        <div class="btn"><a hreef="{% url "users:counterattack" %}">대응하기</a></div>
         <hr>
     {% endif %}
 {% endif %}
 <hr>
-<button class="btn" onclick="location.href='{% url "users:gamelist" %}'">전적 목록</button>
+<div class="btn"><a hreef="{% url "users:gamelist" %}">전적목록</a></div>
