@@ -26,6 +26,10 @@
 
     body {text-align: center;}
 
+    .hr{
+      color:lightgray;
+    }
+
     </style> 
 </head>
 <body class="bg-secondary text-dark ">
@@ -62,14 +66,17 @@
         </div>
       </nav>
 <!-- ↑: Navbar코드 ↓:코드 들어갈것 -->
-        
     <div class="container d-flex flex-column justify-content-center" style="height:100vh;">
       <div class="row align-self-center" style="float: none;">
         <div class="col align-self-center" style="float: none; margin:0 auto;">
-        {% block content %}
-        {% endblock content %}
+          <div style="border:2px solid darkgrey; border-radius: 30px;">
+            <div style="padding:70px">
+              {% block content %}
+              {% endblock content %}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
     </div>
     <div class="text-center  text-secondary" >
         <footer class="bg-dark" style="position : fixed; bottom:0; padding:10px; width: 100%; ">

@@ -3,21 +3,22 @@
 {% extends 'users/base.html' %}
 
 {%block content%}
-    <h1>Piro 명예의 전당</h1>
-    <br><br>
+    <h1 class="text-light">Piro 명예의 전당</h1>
     <hr>
     <div>
         <ul style="list-style: none; padding:0;">
             {% for user in users %}
             {% if forloop.counter <= 3 %}
-            <li>
+            <li class="text-light">
                 {{ forloop.counter }}등 {{ user }}님! 총점수 : {{ user.sum }}
             </li>
             {% endif %}
             {% endfor %}
         </ul>
     </div>
+    
     <button type="button" class="btn btn-primary" style="width:200px; margin:20px">
         <a href="{% url 'users:gamelist' %}" class="text-light">전적 목록</a>
     </button>
+
 {%endblock%}
