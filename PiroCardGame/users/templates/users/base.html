@@ -23,7 +23,10 @@
     <title>PIROGRAM CARDGAME</title>
     <style type="text/css"> 
       a { text-decoration:none } 
-      </style> 
+
+      body {text-align: center;}
+
+    </style> 
 </head>
 <body>
     {% load static %} <!--static 폴더에 있는걸 업로드하는거-->
@@ -58,10 +61,16 @@
         </div>
       </nav>
 <!-- ↑: Navbar코드 ↓:코드 들어갈것 -->
-      <div class="ideas">
-          {%block content%}
-          {%endblock%}
-      </div>
+        
+    {% block content %}
+    {% endblock content %}
+    <div class="text-center" >
+        <footer style="position : fixed; bottom:0;
+          padding:10px; width: 100%; background-color: lightblue;">
+        <p> 마지막 팀 과제 </p>
+        <p> 피로피로피로피로피로피로피로피로피로피로피로피로피로피로피로</p>
+        </footer>
+    </div>
       <script src="./js/bootstrap.bundle.js"></script>
       <script src="./js/bootstrap.bundle.js.map"></script>
       <script src="./js/bootstrap.bundle.min.js"></script>

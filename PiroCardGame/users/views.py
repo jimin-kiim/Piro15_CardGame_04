@@ -4,6 +4,10 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
 from .models import User
 from .models import Game
+
+from django.db.models import Q
+
+from django.contrib.auth.models import User as U
 # from . import forms
 
 def attack(request):
@@ -12,7 +16,7 @@ def attack(request):
 def counterattack(request):
     return render(request, "users/counterattack.html")
 
-def gameinfo(request):
+def gameinfo(request,pk):
     user = User.objects.get(pk=pk)
     game = Game.objects.get(pk=pk)
     if request.method == "GET":
@@ -24,20 +28,14 @@ def gameinfo(request):
         game.delete()
         return redirect(request, "users/gamelist.html")
 
-def gamelist(request, User, Game, pk):
-    user = User.objects.(pk=pk)
-    game = Game.objects.order_by('-pk')
-    if request.method == "GET":
-        ctx = {
-            'user':user,
-            'game':game,
-            'challenger':game.challenger,
-        }
-        return render(request, "users/gamelist.html", ctx)
-    else: #method==post일때 : 게임취소클릭
-        game.delete()
-        return redirect("user:gamelist")
-
+def gamelist(request, Game, pk):
+    user = get_object_or_404(U,pk=pk) #user 모델
+    games = U.objects.filter(Q(challenger=user.username) or Q(opponent=user.username)) #game 모델
+    ctx={'user':user,'games':games}
+    
+    return render(request, "users/main.html",ctx)
+    
+ 
 
 def log_in(request):
     if request.method == "POST":
@@ -67,7 +65,10 @@ def log_out(request):
 
 
 def main(request):
-    return render(request, "users/main.html")
+    users = U.objects.all()
+    ctx={'users':users}
+
+    return render(request, "users/main.html",ctx)
 
 def ranking(request):
     users = User.objects.all()
