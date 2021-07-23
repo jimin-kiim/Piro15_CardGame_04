@@ -9,10 +9,12 @@
     <div class="btn btn-border"><a href="{% url 'users:gamelist' %}">전적 목록</a></div>
     <div>
         <ul>
-            {% for i in len(users) %}
-                <li>
-                    {{ i+1 }}등 {{ user[i].name }}님! 총점수 : {{ user[i].sum }}
-                </li>
+            {% for user in users %}
+                {% if forloop.counter <= 3 %}
+                    <li>
+                        {{ forloop.counter }}등 {{ user }}님! 총점수 : {{ user.sum }}
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
     </div>
