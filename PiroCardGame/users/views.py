@@ -31,23 +31,24 @@ def randomCard():
 
 def attack(request):
 
-    num_list = [random.randint(1, 10) for i in range(5)]
-    card_set = ((f"{num}", f"{num}") for num in num_list)
 
-    user = request.user
     print(request.POST)
     print(request.user.id)
     if request.method == 'POST':
-        form = GameForm(data=request.POST, user=request.user, cardset=card_set)
+        print("POST success")
+        form = GameForm(data=request.POST)
         if form.is_valid():
-            form.cleaned_data['challenger'] = request.user
             game = Game.objects.create(**form.cleaned_data)
-            game.set_card_list(num_list)
+            game.challenger = request.user
             game.save()
+            print(game)
             return render(request, 'users/gamelist.html', {'form':form})
+        else:
+            print("invalid form")
 
     else:
-        form = GameForm(user, cardset=card_set)
+        print("GET success")
+        form = GameForm()
     return render(request, "users/attack.html", {'form':form})
 
 def counterattack(request):

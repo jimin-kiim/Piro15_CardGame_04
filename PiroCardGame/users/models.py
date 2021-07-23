@@ -22,6 +22,10 @@ from django.contrib.auth.models import User as U
 
 class Game(models.Model):
 
+
+    cards = random.sample(range(1, 10), 5)
+    choices = ((f"{card}", f"{card}") for card in cards)
+
     challenger = models.ForeignKey(
         to=U, on_delete=models.CASCADE, related_name='challenger', null=True, default=None)
     opponent = models.ForeignKey(
@@ -29,16 +33,9 @@ class Game(models.Model):
     status = models.BooleanField(default=True)  # 진행중, 게임 끝
     rule = models.BooleanField(null=True, default=True)    
     result = models.BooleanField(default=True)
-    challengeCard = models.CharField(max_length=10, default=1)
+    challengeCard = models.CharField(max_length=10, choices=choices)
     opponentCard = models.CharField(max_length=10, null=True, default=None)
-    card_list = models.CharField(max_length=50, null=True, default="1,2,3,4,5")
 
-    def set_card_list(self, card_list):
-        self.card_list = card_list.join(",")
-        self.save()
-
-    def get_list(self):
-        return self.card_list.split(",")
     
 
 # class Card(models.Model):

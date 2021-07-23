@@ -16,14 +16,14 @@ class LoginForm(forms.Form):
 
 class GameForm(forms.ModelForm):
     
-    def __init__(self, user, cardset, *args,**kwargs):
-        self.user = user
-        super(GameForm, self).__init__(*args, **kwargs)
-        self.fields['opponent'].queryset = User.objects.exclude(id=user.id)
-        self.fields['challengerCard'] = ChoiceField(choices=cardset)
+    # def __init__(self, user, cardset, *args,**kwargs):
+    #     self.user = user
+    #     super(GameForm, self).__init__(*args, **kwargs)
+    #     self.fields['opponent'].queryset = User.objects.exclude(id=user.id)
+    #     self.fields['challengerCard'] = ChoiceField(choices=cardset)
 
 
     class Meta:
         model = Game
-        fields = ('opponent', )
+        fields = ('opponent', 'challengeCard' )
     
