@@ -44,10 +44,9 @@ def gamelist(request):
     user = request.user #로그인 된 사람    
     games = Game.objects.all() #game 모델
     ctx={'user':user,'games':games}
-    
     return render(request, "users/gamelist.html",ctx)
     
- 
+
 def log_in(request):
     if request.method == "POST":
         form = form = AuthenticationForm(request, request.POST)
@@ -82,7 +81,7 @@ def main(request):
     return render(request, "users/main.html",ctx)
 
 def ranking(request):
-    users = User.objects.all().order_by('sum')
+    users = list(User.objects.all().order_by('sum'))
     ctx = {
         'users':users
     }
