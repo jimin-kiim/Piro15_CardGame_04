@@ -5,7 +5,7 @@ from django.contrib.auth.models import User as U
 from django.urls import reverse
 from .models import User
 from .models import Game
-
+import random
 from django.db.models import Q
 
 from django.contrib.auth.models import User as U
