@@ -1,6 +1,6 @@
 from django.db import models
 import random
-
+from django.contrib.auth.models import User as U
 
 class User(models.Model):
     PLAYER_CHOICES = (
@@ -20,13 +20,15 @@ class User(models.Model):
 
 class Game(models.Model):
     challenger = models.ForeignKey(
-        to='users.User', on_delete=models.CASCADE, related_name='challenger', null=True)
+        to=U, on_delete=models.CASCADE, related_name='challenger', null=True, default=None)
     opponent = models.ForeignKey(
-        to='users.User', on_delete=models.CASCADE, related_name='opponent', null=True)
-    status = models.IntegerField(null=True)  # 진행중, 게임 끝
-    rule = models.BooleanField(null=True)    
-    result = models.BooleanField() 
-
+        to=U, on_delete=models.CASCADE, related_name='opponent', null=True)
+    rule = models.BooleanField(null=True, default=True) 
+    status = models.BooleanField(default=True)  # 진행중, 게임 끝   
+    result = models.BooleanField(default=True)
+    challengerCard = models.CharField(max_length=10, default=1)
+    opponentCard = models.CharField(max_length=10, null=True, default=None)
+    
 
 class Card(models.Model):
 
