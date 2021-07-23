@@ -11,4 +11,5 @@ urlpatterns = [
     path('attack/', views.attack, name="attack"), #게임하기 버튼 누르면 가는 곳
     path('gameinfo/', views.gameinfo, name="gameinfo"), #게임정보 버튼 누르면 가는 곳
     path('ranking/', views.ranking, name="ranking"),
+    path('<int:pk>/delete/', views.delete, name="delete"),
 ]

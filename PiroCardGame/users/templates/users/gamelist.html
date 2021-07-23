@@ -12,33 +12,37 @@
 <p>현재플레이어: {{user.username}} </p>
 <hr>
 
-{% for game in games %}
-    <!-- 도전자 vs 상대방-->
-    {{ game.pk }}-{{ game.challenger }}VS{{ game.opponent }}
+{% for game in games %}   
+    <div>
+    {%if game.status %} <!--게임 진행중 (status==1) -->
 
-    
-    <!--게임상태-->
-    {%if game.status %} <!--게임 끝 (status==1) -->
-        
-        {%if game.result %} <!--게임 승 (result==1) -->
-            결과: 승리
-        {% else %} <!--게임 패-->
-            결과: 패배
+        {% if game.challenger_id == user.id %}     
+            {{ game.pk }}-{{ game.challenger }} VS {{ game.opponent }}
+            진행 중…
+            <a href="{% url 'users:delete' game.pk %}">게임취소</a>    
+            <a href="{% url 'users:gameinfo' %}">게임정보</a>        
+        {% else %}
         {% endif %}
 
-    {% else %} <!--게임 진행중 (status==0) -->
-            <br>
-            <form action="" method="post">
-                <a href="{% url 'users:gamelist' %}">게임취소</a>
-            </form>
-            <a href="{% url 'users:counterattack' %}">반격하기</a>
+        {% if game.opponent_id == user.id %} 
+            {{ game.pk }}-{{ game.challenger }} VS {{ game.opponent }}
+            <a href="">반격하기</a>     
+            <a href="{% url 'users:gameinfo' %}">게임정보</a>    
+        {% else %}
+        {% endif %}
 
+    {% else %} <!--게임 끝 (status==0) -->
+        {%if game.result %} <!--게임 승 (result==1) -->
+            결과: 승리
+            <a href="{% url 'users:gameinfo' %}">게임정보</a>
+        {% else %} <!--게임 패-->
+            결과: 패배
+            <a href="{% url 'users:gameinfo' %}">게임정보</a>
+        {% endif %}
+            
+        
     {% endif %}
-
+    </div>    
     
-    <!--게임정보버튼-->
-    <a href="{% url 'users:gamelist' %}">전적 목록</a>
-    
-
 {% endfor %}
 {% endblock %}

@@ -6,7 +6,6 @@ from django.urls import reverse
 from .models import User
 from .models import Game
 import random
-from django.db.models import Q
 
 from django.contrib.auth.models import User as U
 # from . import forms
@@ -50,8 +49,8 @@ def gameinfo(request, pk):
 
 def gamelist(request):
     user = request.user #로그인 된 사람    
-    games = Game.objects.filter(Q(challenger_id=user.id) or Q(opponent_id=user.id)) #game 모델
-    ctx={'games':games}
+    games = Game.objects.all() #game 모델
+    ctx={'user':user,'games':games}
     
     return render(request, "users/gamelist.html",ctx)
     
@@ -95,3 +94,8 @@ def ranking(request):
         'users':users
     }
     return render(request, "users/ranking.html", ctx)
+
+def delete(request,pk):
+    game=Game.objects.get(id=pk)
+    game.delete()
+    return redirect('users:gamelist') 
