@@ -11,23 +11,22 @@ import random
 def attack(request):
     if request.method == "POST":
         challenger = request.user
-        opponent = request.POST.get("opponent")
-        challengerCard = request.POST.get("cardset")
-        realOpponent = User.objects.get(opponent)
+        opponent = request.POST["opponent"]
+        challengerCard = request.POST["cardset"]
+        realOpponent = U.objects.get(username=opponent)
         game = Game(challenger=challenger, opponent=realOpponent, challengerCard=challengerCard)
         game.save()
-        return redirect("users:gameinfo", pk=game.pk)
+        return redirect("users:gamelist")
 
     else:
         cardset = []
-        for _ in range(5):
-            cardSelect = random.randint(1, 10)
-            cardset.append(cardSelect)
-        user_all = list(U.objects.all())
-        user_all.remove(request.user)
+        cards = random.sample(range(1,10),5)
+        
+        user_all = U.objects.exclude(id=request.user.id)
+        # user_all.remove(request.user)
         ctx = {
             "user_all": user_all,
-            "cardset": cardset,
+            "cardset": cards,
         }
         return render(request, "users/attack.html", ctx)
 
