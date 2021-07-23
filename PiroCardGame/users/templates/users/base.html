@@ -26,6 +26,10 @@
 
     body {text-align: center;}
 
+    .hr{
+      color:lightgray;
+    }
+
     </style> 
 </head>
 <body class="bg-secondary text-dark ">
@@ -65,9 +69,11 @@
     <div class="container d-flex flex-column justify-content-center" style="height:100vh;">
       <div class="row align-self-center" style="float: none;">
         <div class="col align-self-center" style="float: none; margin:0 auto;">
-          <div style="border: 1px solid black">
-          {% block content %}
-          {% endblock content %}
+          <div style="border:2px solid darkgrey; border-radius: 30px;">
+            <div style="padding:70px">
+              {% block content %}
+              {% endblock content %}
+            </div>
           </div>
         </div>
       </div>

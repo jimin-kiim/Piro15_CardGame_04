@@ -14,7 +14,7 @@ def attack(request):
         realOpponent = User.objects.get(username=opponent)
         game = Game(challenger=challenger, opponent=realOpponent, challengerCard=challengerCard)
         game.save()
-        return redirect("users:main")
+        return redirect("users:gamelist")
 
     else:
         cards = random.sample(range(1,10),5)
