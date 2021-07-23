@@ -8,7 +8,7 @@ from .forms import GameForm
 import random
 # from . import forms
 
-def attack(request):
+def randomCard():
     option = []
     rnum = random.randint(0, 10)
 
@@ -25,12 +25,16 @@ def attack(request):
         (f'{option[4]}', f'{option[4]}'),
     )
 
-    cardset = CHOICES[:]
+    return CHOICES
+
+
+
+def attack(request, cardset = randomCard()):
     user = request.user
+    print(request.POST)
     print(request.user.id)
     if request.method == 'POST':
         form = GameForm(data=request.POST, cardset=cardset ,user=user)
-        
         if form.is_valid():
             form.cleaned_data['challenger'] = request.user
             game = Game.objects.create(**form.cleaned_data)
