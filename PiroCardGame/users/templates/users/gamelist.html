@@ -27,15 +27,12 @@
         {% endif %}
 
     {% else %} <!--게임 진행중 (status==0) -->
-        {% if challenger.name==name %} <!-- 로그인한 넘이 공격한거-->
-            진행 중…
             <br>
             <form action="" method="post">
                 <a href="{% url 'users:gamelist' %}">게임취소</a>
             </form>
-        {% else %}  <!-- 상대가 공격한거-->  
             <a href="{% url 'users:counterattack' %}">반격하기</a>
-        {% endif %}
+
     {% endif %}
 
     
@@ -44,3 +41,4 @@
     
 
 {% endfor %}
+{% endblock %}

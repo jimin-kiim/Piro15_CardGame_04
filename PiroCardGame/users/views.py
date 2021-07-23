@@ -19,7 +19,7 @@ def attack(request):
         realOpponent = U.objects.get(username=opponent)
         game = Game(challenger=challenger, opponent=realOpponent, challengerCard=challengerCard)
         game.save()
-        return redirect("users:gamelist")
+        return redirect("users:main")
 
     else:
         cardset = []
@@ -50,10 +50,10 @@ def gameinfo(request, pk):
 
 def gamelist(request):
     user = request.user #로그인 된 사람    
-    games = Game.objects.filter(Q(challenger=user.username) or Q(opponent=user.username)) #game 모델
+    games = Game.objects.filter(Q(challenger_id=user.id) or Q(opponent_id=user.id)) #game 모델
     ctx={'games':games}
     
-    return render(request, "users/main.html",ctx)
+    return render(request, "users/gamelist.html",ctx)
     
  
 def log_in(request):
