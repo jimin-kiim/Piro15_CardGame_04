@@ -28,15 +28,54 @@ def attack(request):
         }
         return render(request, "users/attack.html", ctx)
 
-def counterattack(request):
-   if request.method == "GET":
-       cardset = []
-       for _ in range(5):
-           cardSelect = random.randint(1, 10)
-           cardset.append(cardSelect)
-        return render(request, "users/counterattack.html")
-    else: #post방식일 때 : 반격하기 버튼 누른경우. : 게임 결과창으로 이동 
-        return render(request, "users/attack.html", ctx)
+def counterattack(request, pk):
+    game = get_object_or_404(Game, pk=pk)
+    challengerCard = game.challengerCard
+    user = User.objects.get(id=request.user.id)
+    print(challengerCard)
+    user = request.user
+    challenger = User.objects.get(id=game.challenger_id)
+    if request.method == "POST":
+        rule = random.randint(0,1)
+        print('rule', rule)
+        result = game.result
+        opponent_card = request.POST['cardset']
+        print(opponent_card)
+        if rule is True: #true일 때 : 숫자 큰 사람이 이긴 것
+            if int(challengerCard) > int(opponent_card):
+                result = 0 # challenger가 이긴것
+                user.sum = user.sum - int(opponent_card)
+                challenger.sum = challenger.sum + int(challengerCard)
+            else:
+                result = 1 # opponent가 이긴것
+                user.sum = user.sum + int(opponent_card)
+                challenger.sum = challenger.sum - int(challengerCard)
+        else:
+            if int(challengerCard) < int(opponent_card):
+                result = 0 # challenger가 이긴것
+                user.sum = user.sum - int(opponent_card)
+                challenger.sum = challenger.sum + int(challengerCard)
+            else:
+                result = 1 # opponent가 이긴것
+                user.sum = user.sum + int(opponent_card)
+                challenger.sum = challenger.sum - int(challengerCard)
+        game.rule = rule
+        game.result = result
+        game.opponentCard = opponent_card
+        game.save()
+        user.save()
+        challenger.save()
+        return redirect('users:gamelist')
+    else:
+        cardset = []
+        cards = random.sample(range(1,10),5)
+        ctx = {
+            'game':game,
+            'user':user,
+            'challenger':challenger,
+            "cardset": cards,
+        }
+    return render(request, "users/counterattack.html", ctx)
 
 def gameinfo(request, pk):
     game = get_object_or_404(Game, pk=pk)
@@ -94,6 +133,7 @@ def log_out(request):
 def main(request):
     users = User.objects.all()
     ctx={'users':users}
+    return render(request, 'users/main.html')
 
 def ranking(request):
     users = list(User.objects.all().order_by('sum'))

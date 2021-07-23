@@ -2,13 +2,22 @@
 <!-- TODO(2): 카드 고를 수 있게 선택지 주기(1~9사이 랜덤) -->
 <!-- TODO(3): 반격하기!버튼 누르면 게임 정보를 띄어주기 -->
 {% extends 'users/base.html' %}
-
+{% csrf_token %}
 {%block content%}
 <h2>
     {{ challenger }}에게 반격하세요!
 </h2>
 
 <span>내가 고른 카드 : </span> 
-    <form action="" method="post">
+{% csrf_token %}
+    <form action="" method="post" enctype="multipart/form-data">
         <input type="submit" value="cancle" href='{% url "users:gamelist" %}'>반격하기</button>
+        <select class="" name="cardset" id="">
+            {% for card in cardset %}
+                <option value="{{ card }}">{{ card }}</option>
+            {% endfor %}
+        </select>
+        {% csrf_token %}
+        <input type="submit" value="Submit">
     </form>
+{% endblock %}
