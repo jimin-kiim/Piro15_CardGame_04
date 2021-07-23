@@ -45,22 +45,22 @@ class Game(models.Model):
     opponentCard = models.CharField(choices=CHOICES, max_length=10, null=True, default=None)
     
 
-# class Card(models.Model):
+class Card(models.Model):
 
-#     option = []
-#     rnum = random.randint(0, 10)
+    option = []
+    rnum = random.randint(0, 10)
 
-#     for i in range(5):
-#         while rnum in option:
-#             rnum = random.randint(0, 10)
-#         option.append(rnum)
+    for i in range(5):
+        while rnum in option:
+            rnum = random.randint(0, 10)
+        option.append(rnum)
 
-#     CHOICES = (
-#         ("num1", f'{option[0]}'),
-#         ("num2", f'{option[1]}'),
-#         ("num3", f'{option[2]}'),
-#         ("num4", f'{option[3]}'),
-#         ("num5", f'{option[4]}'),
-#     )
+    CHOICES = (
+        ("num1", f'{option[0]}'),
+        ("num2", f'{option[1]}'),
+        ("num3", f'{option[2]}'),
+        ("num4", f'{option[3]}'),
+        ("num5", f'{option[4]}'),
+    )
 
-#     card = models.CharField(choices=CHOICES, max_length=10)
+    card = models.CharField(choices=CHOICES, max_length=10)
