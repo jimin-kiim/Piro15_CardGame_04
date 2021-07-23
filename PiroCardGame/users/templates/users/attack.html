@@ -6,6 +6,17 @@
 {%block content%}
 <p>내가 고른 카드: -----여기 카드숫자구현해야함-------</p>
 <p>공격할 상대는? -----여기 상대초이스구현해야함-------</p>
+
 <div class="btn btn-border"><a href="{% url 'users:gamelist' %}">공격하기!</a></div>
 
+<form method="POST" enctype="multipart/form-data">
+ 
+    <!-- Security token -->
+    {% csrf_token %}
+ 
+    <!-- Using the formset -->
+    {{ form.as_p }}
+
+    <input type="submit" value="Submit">
+</form>
 {%endblock%}

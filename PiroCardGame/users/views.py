@@ -1,13 +1,27 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User as U
 from django.urls import reverse
-from .models import User
-from .models import Game
+from .models import User, Game
+from .forms import GameForm
 # from . import forms
 
 def attack(request):
-    return render(request, "users/attack.html")
+    user = request.user
+    print(request.user.id)
+    if request.method == 'POST':
+        form = GameForm(data=request.POST, user=user)
+        
+        if form.is_valid():
+            form.cleaned_data['challenger'] = request.user
+            game = Game.objects.create(**form.cleaned_data)
+            game.save()
+            return render(request, 'users/gamelist.html', {'form':form})
+
+    else:
+        form = GameForm(user)
+    return render(request, "users/attack.html", {'form':form})
 
 def counterattack(request):
     return render(request, "users/counterattack.html")
