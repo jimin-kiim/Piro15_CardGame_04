@@ -40,7 +40,7 @@
     {% endif %}
 <!-- 게임 종료 -->
 {% else %}
-    <h5 text-light></h5>
+    <h5 class="text-light">
     <hr>
     {% if game.rule %}
         <p>숫자가 더 큰 사람이 대결에서 이깁니다</p>
@@ -62,6 +62,7 @@
         <hr>
         <p>점수: -{{game.challengerCard}}점</p>
     {% endif %}
+    <hr>
     </h5>  
     <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
         <a href="{% url 'users:gamelist'%}" class="text-light">전적목록</a>
