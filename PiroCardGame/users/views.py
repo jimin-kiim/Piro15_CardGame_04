@@ -12,7 +12,7 @@ def attack(request):
         challenger = request.user
         opponent = request.POST["opponent"]
         challengerCard = request.POST["cardset"]
-        realOpponent = U.objects.get(username=opponent)
+        realOpponent = User.objects.get(username=opponent)
         game = Game(challenger=challenger, opponent=realOpponent, challengerCard=challengerCard)
         game.save()
         return redirect("users:main")
@@ -21,8 +21,7 @@ def attack(request):
         cardset = []
         cards = random.sample(range(1,10),5)
         
-        user_all = U.objects.exclude(id=request.user.id)
-        # user_all.remove(request.user)
+        user_all = User.objects.exclude(id=request.user.id)
         ctx = {
             "user_all": user_all,
             "cardset": cards,
@@ -30,21 +29,41 @@ def attack(request):
         return render(request, "users/attack.html", ctx)
 
 def counterattack(request):
-    return render(request, "users/counterattack.html")
+   if request.method == "GET":
+       cardset = []
+       for _ in range(5):
+           cardSelect = random.randint(1, 10)
+           cardset.append(cardSelect)
+        return render(request, "users/counterattack.html")
+    else: #post방식일 때 : 반격하기 버튼 누른경우. : 게임 결과창으로 이동 
+        return render(request, "users/attack.html", ctx)
 
 def gameinfo(request, pk):
     game = get_object_or_404(Game, pk=pk)
     ctx = {"game": game}
     return render(request, "users/gameinfo.html", ctx)
 
+# def gamelist(request, User, Game, pk):
+#     user = User.objects.get(pk=pk)
+#     game = Game.objects.order_by('-pk')
+#     if request.method == "GET":
+#         ctx = {
+#             'user':user,
+#             'game':game,
+#             'challenger':game.challenger,
+#         }
+#         return render(request, "users/gamelist.html", ctx)
+#     else: #method==post일때 : 게임취소클릭
+#         game.delete()
+#         return redirect("user:gamelist")
+
 def gamelist(request):
     user = request.user #로그인 된 사람    
     games = Game.objects.all() #game 모델
     ctx={'user':user,'games':games}
-    
     return render(request, "users/gamelist.html",ctx)
     
- 
+
 def log_in(request):
     if request.method == "POST":
         form = form = AuthenticationForm(request, request.POST)
@@ -73,13 +92,11 @@ def log_out(request):
 
 
 def main(request):
-    users = U.objects.all()
+    users = User.objects.all()
     ctx={'users':users}
 
-    return render(request, "users/main.html",ctx)
-
 def ranking(request):
-    users = User.objects.all().order_by('sum')
+    users = list(User.objects.all().order_by('sum'))
     ctx = {
         'users':users
     }
