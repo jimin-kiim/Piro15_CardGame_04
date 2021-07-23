@@ -29,7 +29,8 @@ def randomCard():
 
 
 
-def attack(request, cardset = randomCard()):
+def attack(request):
+    cardset = randomCard()
     user = request.user
     print(request.POST)
     print(request.user.id)
