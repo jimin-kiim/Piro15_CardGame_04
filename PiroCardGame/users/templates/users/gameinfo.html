@@ -30,7 +30,7 @@
             {{ game.pk }}-{{ game.challenger }} VS {{ game.opponent }}<br>
         </h4>
         <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
-            <a href="" class="text-light">반격하기</a>
+            <a href="{% url 'users:counterattack' game.pk%}" class="text-light">반격하기</a>
         </button>
         <hr>
         <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
@@ -51,11 +51,15 @@
     나 : {{ game.challengerCard }}   
     user : {{ game.opponentCard }}
     <hr>
-    결과: {{game.result}}
-    <hr>
+    
+    
     {% if game.result %}
+        결과 : 승리!
+        <hr>
         <p>점수: {{game.challengerCard}}점</p>
     {% else %}
+        결과 : 패배!
+        <hr>
         <p>점수: -{{game.challengerCard}}점</p>
     {% endif %}
     </h5>  

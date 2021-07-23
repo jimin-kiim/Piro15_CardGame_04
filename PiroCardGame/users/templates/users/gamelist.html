@@ -33,7 +33,7 @@
             {{ game.pk }}-{{ game.challenger }} VS {{ game.opponent }}
             </span>
             <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
-                <a href="" class="text-light">반격하기</a>
+                <a href="{% url 'users:counterattack' game.pk%}" class="text-light">반격하기</a>
             </button>
             <button type="button" class="btn btn-primary" style="width:100px; padding:3px">
                 <a href="{% url 'users:gameinfo' game.pk%}" class="text-light">게임정보</a>

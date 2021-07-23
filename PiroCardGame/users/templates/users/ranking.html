@@ -6,17 +6,18 @@
     <h1>Piro 명예의 전당</h1>
     <br><br>
     <hr>
-    <div class="btn btn-border"><a href="{% url 'users:gamelist' %}">전적 목록</a></div>
     <div>
-        <ul>
+        <ul style="list-style: none;">
             {% for user in users %}
-                {% if forloop.counter <= 3 %}
-                    <li>
-                        {{ forloop.counter }}등 {{ user }}님! 총점수 : {{ user.sum }}
-                    </li>
-                {% endif %}
+            {% if forloop.counter <= 3 %}
+            <li>
+                {{ forloop.counter }}등 {{ user }}님! 총점수 : {{ user.sum }}
+            </li>
+            {% endif %}
             {% endfor %}
         </ul>
     </div>
-
+    <button type="submit" class="btn btn-primary" style="width:200px;" onclick="location.href="{% url 'users:gamelist' %}">
+        전적 목록
+    </button>
 {%endblock%}

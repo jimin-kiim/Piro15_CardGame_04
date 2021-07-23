@@ -56,6 +56,7 @@ def counterattack(request, pk):
                 result = 1 # opponent가 이긴것
                 user.sum = user.sum + int(opponent_card)
                 challenger.sum = challenger.sum - int(challengerCard)
+        game.status = 0
         game.rule = rule
         game.result = result
         game.opponentCard = opponent_card
@@ -78,20 +79,6 @@ def gameinfo(request, pk):
     game = get_object_or_404(Game, pk=pk)
     ctx = {"game": game}
     return render(request, "users/gameinfo.html", ctx)
-
-# def gamelist(request, User, Game, pk):
-#     user = User.objects.get(pk=pk)
-#     game = Game.objects.order_by('-pk')
-#     if request.method == "GET":
-#         ctx = {
-#             'user':user,
-#             'game':game,
-#             'challenger':game.challenger,
-#         }
-#         return render(request, "users/gamelist.html", ctx)
-#     else: #method==post일때 : 게임취소클릭
-#         game.delete()
-#         return redirect("user:gamelist")
 
 def gamelist(request):
     user = request.user #로그인 된 사람    
@@ -133,7 +120,7 @@ def main(request):
     return render(request, 'users/main.html')
 
 def ranking(request):
-    users = list(User.objects.all().order_by('sum'))
+    users = list(User.objects.all().order_by('sum').reverse())
     ctx = {
         'users':users
     }
