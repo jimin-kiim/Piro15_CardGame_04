@@ -1,0 +1,26 @@
+<!-- TODO(1):DB에 넣어놓은 로그인 정보로 로그인 가능하게 -->
+<!-- TODO(2):구글,페이스북 연동 로그인 -->
+<!-- TODO(3):로그인 성공하면 메인 페이지의 로그인된 화면으로 이동 -->
+{% extends 'users/base.html'%}
+{%block content%}
+
+    {% load socialaccount %}
+    {% providers_media_js %}
+
+    <h1 class="text-light">5초만에 로그인하고 숫자카드 뽑으러 가기</h1>
+    
+    {% if user.is_authenticated %}
+    
+    <button type="button" class="btn btn-primary"><a href="/accounts/logout" class="text-light">로그아웃</a></button>
+    <br>
+    {% else %}
+    <button type="button" class="btn btn-primary" style="width:200px; margin:20px">
+        <a href="/accounts/login/" class="text-light">일반 로그인</a>
+    </button>
+    <br>
+    <button type="button" class="btn btn-primary" style="width:200px;">
+        <a href="{% provider_login_url 'google'%}" class="text-light">구글 로그인</a>
+    </button>
+    {% endif %}
+    
+{%endblock%}

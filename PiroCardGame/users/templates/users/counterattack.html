@@ -1,0 +1,27 @@
+<!-- TODO(1): (상대 유저 아이디)에게 반격하세요! -->
+<!-- TODO(2): 카드 고를 수 있게 선택지 주기(1~9사이 랜덤) -->
+<!-- TODO(3): 반격하기!버튼 누르면 게임 정보를 띄어주기 -->
+{% extends 'users/base.html' %}
+
+{%block content%}
+    <form method="POST" enctype="multipart/form-data">
+        <h4 class="text-light">{{ game.challenger }}에게 반격하세요!</h4>
+        <br>
+        <h5 class="text-light"><label for="cardset">내가 고른 카드</label>
+            <select class="" name="cardset">
+                {% for card in cardset %}
+                <option value="{{ card }}">{{ card }}</option>
+                {% endfor %}
+            </select>
+        </h5>
+        <hr>
+
+        <button type="submit" class="btn btn-primary" style="width:200px;" onclick="location.href="{% url 'users:gameinfo' game.pk %}"">
+            반격하기!
+        </button>
+        {% csrf_token %}
+
+        {{ form.as_p }}
+    </form>
+{%endblock%}
+

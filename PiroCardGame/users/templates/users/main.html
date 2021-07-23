@@ -1,0 +1,26 @@
+<!-- TODO(1) : 로그인 버튼 누르면 로그인 하는 화면 이동
+TODO(2) : 로그인 했을 때와 안했을 때 화면 차이:전적보기, ~님이 로그인중, NAVBAR에 랭킹보기, 로그아웃
+완료 TODO(3) : 게임하기 버튼 누르면 로그인 페이지로 이동 -->
+<!-- X(base에서 상속받으면 됨)TODO(4) : PIROGRAM CARDGAME로고 누르면 메인페이지 이동 : base.html에서 상속받기 -->
+{% extends 'users/base.html'%}
+{%block content%}
+    <div class="container text-center">
+        <i class="far fa-lightbulb fa-5x" style="color:#bbff00; margin-bottom: 20px"></i>
+        <h1 class="text-light" style="line-height: 3rem; margin-bottom: 30px" >
+            전 세계 피로그래머와 <br>
+            한 판 승부 숫자 카드게임
+        </h1>
+        <hr>
+
+        <!-- 로그인 되어있다면 게임하기와 전적보기 버튼이 보이게  -->
+        {% if user.is_authenticated %}
+        <h5>{{user.username}}님이 로그인 중<br></h5>
+        
+        <button type="button" class="btn btn-dark"><a href="{% url 'users:attack' %}" class="text-light">게임하기</a></button>
+        <button type="button" class="btn btn-dark"><a href="{% url 'users:gamelist' %}" class="text-light">전적보기</a></button>
+        {% else %}
+        <button type="button" class="btn btn-dark"><a href="{% url 'users:login' %}" class="text-light">게임하기</a></button>
+        
+        {% endif %}
+    </div>
+{% endblock %} 
