@@ -12,6 +12,6 @@ class CustomUserAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(models.Card)
-class CustomUserAdmin(admin.ModelAdmin):
-    pass
+# @admin.register(models.Card)
+# class CustomUserAdmin(admin.ModelAdmin):
+#     pass
