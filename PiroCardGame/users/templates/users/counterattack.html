@@ -15,7 +15,7 @@
         </select>
         <br>
 
-        <button type="submit" class="btn btn-primary" style="width:200px;" onclick="location.href="{% url 'users:gameinfo' game.pk %}">
+        <button type="submit" class="btn btn-primary" style="width:200px;" onclick="location.href="{% url 'users:gameinfo' game.pk %}"">
             반격하기!
         </button>
         {% csrf_token %}

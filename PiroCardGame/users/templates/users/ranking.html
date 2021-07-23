@@ -17,7 +17,7 @@
             {% endfor %}
         </ul>
     </div>
-    <button type="submit" class="btn btn-primary" style="width:200px;" onclick="location.href="{% url 'users:gamelist' %}">
-        전적 목록
+    <button type="button" class="btn btn-primary" style="width:200px; margin:20px">
+        <a href="{% url 'users:gamelist' %}" class="text-light">전적 목록</a>
     </button>
 {%endblock%}
