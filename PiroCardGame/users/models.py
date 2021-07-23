@@ -19,8 +19,6 @@ class User(models.Model):
 
 
 class Game(models.Model):
-    option = []
-
     challenger = models.ForeignKey(
         to=U, on_delete=models.CASCADE, related_name='challenger', null=True, default=None)
     opponent = models.ForeignKey(

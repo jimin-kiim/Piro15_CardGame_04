@@ -20,7 +20,7 @@ class GameForm(forms.ModelForm):
         self.user = user
         super(GameForm, self).__init__(*args, **kwargs)
         self.fields['opponent'].queryset = User.objects.exclude(id=user.id)
-        self.fields['challengerCard'] =ChoiceField(choices=cardset)
+        self.fields['challengerCard'] = ChoiceField(choices=cardset)
 
     # option = []
     # rnum = random.randint(0, 10)
@@ -33,3 +33,4 @@ class GameForm(forms.ModelForm):
     class Meta:
         model = Game
         fields = ( 'opponent','challengerCard')
+    
