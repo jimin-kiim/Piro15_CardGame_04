@@ -28,15 +28,14 @@ def gameinfo(request,pk):
         game.delete()
         return redirect(request, "users/gamelist.html")
 
-def gamelist(request, Game, pk):
-    user = get_object_or_404(U,pk=pk) #user 모델
-    games = U.objects.filter(Q(challenger=user.username) or Q(opponent=user.username)) #game 모델
-    ctx={'user':user,'games':games}
+def gamelist(request):
+    user = request.user #로그인 된 사람    
+    games = Game.objects.filter(Q(challenger=user.username) or Q(opponent=user.username)) #game 모델
+    ctx={'games':games}
     
     return render(request, "users/main.html",ctx)
     
  
-
 def log_in(request):
     if request.method == "POST":
         form = form = AuthenticationForm(request, request.POST)
