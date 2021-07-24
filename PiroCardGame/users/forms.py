@@ -13,24 +13,3 @@ class LoginForm(forms.Form):
     email = models.EmailField(verbose_name="E-mail")
     password = forms.CharField(widget=forms.PasswordInput)
 
-class GameForm(forms.ModelForm):
-    
-    
-    def __init__(self, user, cardset,*args,**kwargs):
-        self.user = user
-        super(GameForm, self).__init__(*args, **kwargs)
-        self.fields['opponent'].queryset = User.objects.exclude(id=user.id)
-        self.fields['challengerCard'] = ChoiceField(choices=cardset)
-
-    # option = []
-    # rnum = random.randint(0, 10)
-
-    # for i in range(5):
-    #     while rnum in option:
-    #         rnum = random.randint(0, 10)
-    #     option.append(rnum)
-
-    class Meta:
-        model = Game
-        fields = ( 'opponent','challengerCard')
-    
